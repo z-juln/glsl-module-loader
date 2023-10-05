@@ -7,11 +7,11 @@ const parseInclude = (sourceCode, getModuleSourceCode) => {
   const includePattern = /^[ \t]*#include +<([\w\d./]+)>/gm;
 
   return sourceCode.replace(includePattern, (_, moduleName) => {
-    const moduleCode = moduleMap[moduleName];
+    const moduleCode = getModuleSourceCode(moduleName);
     if (!moduleCode) {
       throw new Error(`Can not resolve #include <${moduleName}>`);
     }
-    return `\n// #include-start<${moduleName}>\n${getModuleSourceCode(moduleName)}\n// #include-end<${moduleName}>\n`;
+    return `\n// #include-start<${moduleName}>\n${moduleCode}\n// #include-end<${moduleName}>\n`;
   });
 };
 
