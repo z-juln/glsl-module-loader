@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { getOptions } from 'loader-utils';
 import { validate } from 'schema-utils';
 import schema from './options.json';
@@ -25,7 +26,10 @@ export default function glslModuleLoader(source) {
 
   const parseSourceCode = parseInclude(
       source,
-      (moduleName) => fs.readFileSync(moduleName, 'utf8')
+      (moduleName) => {
+        const modulePath = path.resolve(this.resourcePath, '../', moduleName);
+        return fs.readFileSync(modulePath, 'utf8');
+      },
     ).trimStart();
 
   const json = JSON.stringify(parseSourceCode)
