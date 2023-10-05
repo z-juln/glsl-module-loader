@@ -23,12 +23,14 @@ export default function glslModuleLoader(source) {
     baseDataPath: 'options',
   });
 
-  const json = parseInclude(
-    JSON.stringify(source.trimStart())
+  const parseSourceCode = parseInclude(
+      source,
+      (moduleName) => fs.readFileSync(moduleName, 'utf8')
+    ).trimStart();
+
+  const json = JSON.stringify(parseSourceCode)
       .replace(/\u2028/g, '\\u2028')
-      .replace(/\u2029/g, '\\u2029'),
-    (moduleName) => fs.readFileSync(moduleName, 'utf8'),
-  );
+      .replace(/\u2029/g, '\\u2029');
 
   const esModule =
     typeof options.esModule !== 'undefined' ? options.esModule : true;
