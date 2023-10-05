@@ -24,7 +24,7 @@ Then add the loader to your `webpack` config. For example:
 **file.js**
 
 ```js
-import txt from './file.txt';
+import glsl from './file.glsl';
 ```
 
 **webpack.config.js**
