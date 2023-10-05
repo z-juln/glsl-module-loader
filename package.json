@@ -1,0 +1,45 @@
+{
+  "name": "glsl-module-loader",
+  "version": "1.0.0",
+  "description": "glsl module webpack loader",
+  "repository": {
+    "url": "https://github.com/z-juln/glsl-module-loader"
+  },
+  "author": "juln",
+  "homepage": "https://github.com/z-juln/glsl-module-loader",
+  "bugs": "https://github.com/z-juln/glsl-module-loader/issues",
+  "main": "dist/cjs.js",
+  "engines": {
+    "node": ">= 10.13.0"
+  },
+  "scripts": {
+    "start": "npm run build -- -w",
+    "clean": "del-cli dist",
+    "prebuild": "npm run clean",
+    "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "webpack": "^4.0.0 || ^5.0.0"
+  },
+  "dependencies": {
+    "loader-utils": "^2.0.0",
+    "schema-utils": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "cross-env": "^7.0.2",
+    "del": "^6.0.0",
+    "del-cli": "^3.0.1",
+    "webpack": "^4.44.2"
+  },
+  "keywords": [
+    "shader",
+    "webpack"
+  ]
+}
