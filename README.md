@@ -1,3 +1,6 @@
+对不起，还是 [glslify](https://github.com/glslify/glslify) / [glslify-loader](https://github.com/glslify/glslify-loader) 香, 别用我这个了.
+
+
 <div align="center">
   <a href="https://github.com/webpack/webpack">
     <img width="200" height="200"
