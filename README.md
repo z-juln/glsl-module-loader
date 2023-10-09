@@ -1,3 +1,8 @@
+[glslify](https://github.com/glslify/glslify) / [glslify-loader](https://github.com/glslify/glslify-loader) 也挺香, 就是目前不能对导入的变量名进行重命名, 也不能导出/导入多个变量, 有时候模块内的变量名也不会转为带hash的模块名
+
+glsl-module-loader: 解析这种语法 `#include <./utils.glsl>`
+
+
 <div align="center">
   <a href="https://github.com/webpack/webpack">
     <img width="200" height="200"
