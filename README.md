@@ -9,6 +9,11 @@
 
 A loader for webpack that allows parse glsl what is contain `#include <./utils.glsl>`.
 
+- `#include <./utils.glsl>`
+- `#include <./utils>`
+- `#include <glsl-noise/simplex/3d>`
+- `#include <glsl-noise/simplex/3d.glsl>`
+
 ## Getting Started
 
 To begin, you'll need to install `glsl-module-loader`:
