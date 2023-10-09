@@ -1,43 +1,41 @@
 import fs from 'fs';
 import path from 'path';
 import { getOptions } from 'loader-utils';
-import { validate } from 'schema-utils';
-import schema from './options.json';
 
 const parseInclude = (sourceCode, getModuleSourceCode) => {
-  const includePattern = /^[ \t]*#include +<([\w\d./]+)>/gm;
+  const includePattern = /^[\s\t]*#include +<(.*?)>/gm;
 
   return sourceCode.replace(includePattern, (_, moduleName) => {
     const moduleCode = getModuleSourceCode(moduleName);
     if (!moduleCode) {
       throw new Error(`Can not resolve #include <${moduleName}>`);
     }
-    return `\n// #include-start<${moduleName}>\n${moduleCode}\n// #include-end<${moduleName}>\n`;
+    const moduleParsedCode = parseInclude(moduleCode, getModuleSourceCode);
+    return `\n// #include-start<${moduleName}>\n${moduleParsedCode}\n// #include-end<${moduleName}>\n`;
   });
 };
 
 export default function glslModuleLoader(source) {
-  const options = getOptions(this);
+  this.cacheable?.();
 
-  validate(schema, options, {
-    name: 'Glsl Module Loader',
-    baseDataPath: 'options',
-  });
+  // Setup options
+  const options = {
+    ...getOptions(this),
+  };
+  
+  const callback = this.async();
 
-  const parseSourceCode = parseInclude(
+  try {
+    const output = parseInclude(
       source,
       (moduleName) => {
         const modulePath = path.resolve(this.resourcePath, '../', moduleName);
         return fs.readFileSync(modulePath, 'utf8');
       },
     ).trimStart();
-
-  const json = JSON.stringify(parseSourceCode)
-      .replace(/\u2028/g, '\\u2028')
-      .replace(/\u2029/g, '\\u2029');
-
-  const esModule =
-    typeof options.esModule !== 'undefined' ? options.esModule : true;
-
-  return `${esModule ? 'export default' : 'module.exports ='} ${json};`;
+  
+    callback(null, output);
+  } catch (error) {
+    callback(error, null);
+  }
 }
