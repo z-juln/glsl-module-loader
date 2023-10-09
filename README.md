@@ -74,6 +74,10 @@ And run `webpack` via your preferred method.
 
 ## Examples
 
+### project
+
+[glsl-module-loader-example](https://github.com/z-juln/glsl-module-loader-example): <https://github.com/z-juln/glsl-module-loader-example>
+
 ### Inline
 
 ```js
